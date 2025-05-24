@@ -49,7 +49,7 @@ Con el archivo main.tf listo, se abre una consola de comandos en Windows y se ej
 terraform init
 ```
 
-![init](https://github.com/PPS11395193/Terraform/img/Captura1.jpg)
+![init](https://github.com/PPS11395193/Terraform/tree/main/img/Captura1.jpg)
 
 Tras la inicialización, se puede ejecutar:
 
@@ -57,14 +57,14 @@ Tras la inicialización, se puede ejecutar:
 terraform plan
 ```
 
-![plan](https://github.com/PPS11395193/Terraform/img/Captura2.jpg)
+![plan](https://github.com/PPS11395193/Terraform/tree/main/img/Captura2.jpg)
 
 Este comando muestra un resumen detallado de las acciones que Terraform realizará para crear la máquina virtual.
 
 Verificado el plan, se continúa con el despliegue ejecutando:
 
-![apply](https://github.com/PPS11395193/Terraform/img/Captura3.jpg)
+![apply](https://github.com/PPS11395193/Terraform/tree/main/img/Captura3.jpg)
 
 Una vez completado el proceso, se puede comprobar en VirtualBox que la VM se ha creado correctamente, está configurada según lo definido y ha sido iniciada automáticamente.
 
-![VM](https://github.com/PPS11395193/Terraform/img/Captura4.jpg)
+![VM](https://github.com/PPS11395193/Terraform/tree/main/img/Captura4.jpg)
