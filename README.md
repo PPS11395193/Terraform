@@ -1,77 +1,39 @@
-# 2. Configuración de una máquina virtual Ubuntu 24.04 en VirtualBox usando Ansible
-En esta sección se describe cómo automatizar la configuración de una máquina virtual con Ubuntu 24.04 utilizando Ansible. Las tareas a realizar incluyen la actualización del sistema y la instalación del servidor web Apache.
+# Práctica: Automatización de Infraestructura con Terraform y Ansible
 
-Para llevar a cabo esta configuración, se ha instalado Ansible en una máquina virtual con Ubuntu Desktop 24.04.1.
+## 1. Introducción
 
-## Instalación y preparación de Ansible
+En esta práctica se pone en marcha un flujo completo de infraestructura como código (IaC), utilizando las herramientas Terraform y Ansible para desplegar y configurar una máquina virtual Ubuntu 24.04 sobre VirtualBox.
 
-Una vez completada la instalación y verificado el funcionamiento de Ansible, es necesario establecer la comunicación por SSH, ya que Ansible se conecta con los equipos remotos a través de este protocolo.
+Terraform se encarga de la creación de la máquina virtual, asignando los recursos necesarios como CPU, memoria, red y disco, mientras que Ansible se ocupa de la configuración del sistema operativo una vez provisionado: actualización de paquetes, instalación del servidor web Apache y despliegue de una página personalizada accesible vía navegador.
 
-![Captura5](../img/Captura5.jpg)
+Este enfoque permite construir entornos reproducibles y estandarizados, facilitando la gestión de sistemas a través de automatización, algo esencial en entornos modernos de desarrollo y operaciones (DevOps).
 
-Generamos una clave SSH con el siguiente comando:
+## 2. Objetivos
 
-``` bash
-ssh-keygen -t rsa -b 4096 -C "stekos2@alu.edu.gva.es"
-```
+1. Provisionar una máquina virtual Ubuntu 24.04 en VirtualBox mediante Terraform.
 
-![Captura6](../img/Captura6.jpg)
+2. Configurar la máquina con Ansible a través de SSH.
 
-Después, copiamos la clave pública al equipo remoto que será gestionado por Ansible:
+3. Automatizar la instalación de Apache y la creación de una página web personalizada.
 
-``` bash
-ssh-copy-id administrador@192.168.1.159
-```
+4. Verificar el funcionamiento del servidor web de forma automática.
 
-## Configuración de Ansible
+## 3. Herramientas utilizadas
 
-Creamos el directorio de configuración, si no existe:
+1. Terraform (v1.x)
 
-``` bash
-sudo mkdir -p /etc/ansible
-```
+2. Ansible (v2.15 o superior)
 
-A continuación, editamos el archivo /etc/ansible/hosts, donde especificamos los equipos a gestionar. En este caso, se añade una entrada para un servidor remoto:
+3. VirtualBox (v7.x)
 
+4. Ubuntu Desktop 24.04 (host de Ansible)
 
-``` yaml
-- name: PPS - FMR - Actualizar sistema e instalar Apache
-  hosts: all
-  become: yes
+5. Ubuntu Server 24.04 (máquina virtual provisionada)
 
-  tasks:
-    - name: Actualizar la caché de paquetes
-      apt:
-        update_cache: yes
+## 4. Conclusión
 
-    - name: Aplicar actualizaciones del sistema
-      apt:
-        upgrade: dist
-        autoremove: yes
-        autoclean: yes
+La práctica ha permitido comprobar cómo las herramientas de infraestructura como código pueden automatizar tanto el aprovisionamiento como la configuración de sistemas, desde la creación de máquinas virtuales hasta la instalación y verificación de servicios.
 
-    - name: Instalar Apache
-      apt:
-        name: apache2
-        state: present
+Gracias al uso combinado de Terraform y Ansible, se consigue una solución robusta, eficiente y replicable, alineada con las mejores prácticas de automatización en entornos DevOps.
 
-    - name: Asegurar que Apache está activo y habilitado
-      service:
-        name: apache2
-        state: started
-        enabled: yes
-```
-
-# Ejecución del playbook
-
-Con todo listo, ejecutamos el playbook mediante el siguiente comando:
-
-``` bash
-ansible-playbook -i hosts setup_ubuntu.yml --ask-become-pass
-```
-
-![Captura7](../img/Captura7.jpg)
-
-Tras completar el proceso, si accedemos a la dirección IP de la máquina configurada desde un navegador, deberíamos ver la página de inicio predeterminada de Apache, lo que indica que la instalación y configuración fueron exitosas.
-
-![Captura8](../img/Captura8.jpg)
+Este tipo de enfoque resulta especialmente útil para crear laboratorios, entornos de pruebas o incluso entornos de producción en entornos controlados, reduciendo errores manuales y acelerando el ciclo de despliegue.
